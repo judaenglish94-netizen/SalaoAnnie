@@ -62,15 +62,15 @@
             align-items: center;
         }
 
-        /* Ajuste do Zoom e Centralização: remove a borda antiga e destaca o "Am" grande ao centro */
+        /* Ajuste fino: Zoom de 340% para ocultar a borda antiga e posicionamento central exato do "Am" */
         .logo-container {
             width: 130px;
             height: 130px;
             margin: 0 auto 20px auto;
             border-radius: 50%;
             background-image: url('annielogo.png');
-            background-size: 240%; /* Dá zoom para ocultar o círculo original da imagem */
-            background-position: center; /* Centraliza perfeitamente o "Am" */
+            background-size: 340%; 
+            background-position: 50% 43%; 
             background-repeat: no-repeat;
             border: 2px solid var(--rose-primary);
             box-shadow: var(--neon-glow), inset 0 0 15px rgba(255, 117, 160, 0.3);
@@ -318,7 +318,7 @@
 <body>
 
     <div class="container">
-        <!-- Logo com zoom estético no "Am" e sem bordas duplicadas -->
+        <!-- Logo perfeitamente centralizada e com zoom ajustado -->
         <div class="logo-container"></div>
 
         <div class="brand-header">
