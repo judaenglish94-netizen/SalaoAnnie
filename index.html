@@ -62,30 +62,21 @@
             align-items: center;
         }
 
+        /* Espaço Circular da Logo com a Imagem annielogo.jpg perfeitamente encaixada */
         .logo-container {
             width: 130px;
             height: 130px;
             margin: 0 auto 20px auto;
             border-radius: 50%;
-            background: linear-gradient(135deg, #251820, #140d12);
+            background-image: url('annielogo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             border: 2px solid var(--rose-primary);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             box-shadow: var(--neon-glow), inset 0 0 15px rgba(255, 117, 160, 0.3);
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
-        }
-
-        .logo-placeholder {
-            color: var(--rose-light);
-            font-size: 12px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 400;
-            text-shadow: 0 0 8px rgba(255, 179, 204, 0.6);
-            text-align: center;
         }
 
         .brand-header {
@@ -327,9 +318,8 @@
 <body>
 
     <div class="container">
-        <div class="logo-container">
-            <span class="logo-placeholder">LOGO / FOTO</span>
-        </div>
+        <!-- Logo com annielogo.jpg integrada mantendo a borda neon -->
+        <div class="logo-container"></div>
 
         <div class="brand-header">
             <h1 class="brand-title">Annie</h1>
@@ -381,7 +371,6 @@
     </div>
 
     <script>
-        // Credenciais do Supabase configuradas com sucesso
         const SUPABASE_URL = "https://fifkfhqjvzqywgewsuiy.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_rjCDpJ4Ft4u196tKwsOo4Q_Q7iXi6En";
         const WHATSAPP_ANNIE = "5579981350204";
@@ -398,7 +387,6 @@
             }
         }
 
-        // Gera os próximos dias úteis/sábados a partir de 09/11/2026
         function generateScheduleDays() {
             let days = [];
             let currentDate = new Date(2026, 10, 9); // 9 de Novembro de 2026
@@ -407,7 +395,7 @@
             while(count < 6) { 
                 let dayOfWeek = currentDate.getDay(); 
                 
-                if (dayOfWeek !== 0) { // Pula domingo
+                if (dayOfWeek !== 0) {
                     let dayNames = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
                     let slots = (dayOfWeek === 6) ? ["14:00", "15:00", "16:00", "17:00"] : ["17:30", "18:30", "19:30"];
                     
@@ -518,7 +506,6 @@
             window.location.href = whatsappUrl;
         }
 
-        // Painel Secreto da Annie
         async function openAdminPanel() {
             let pass = prompt("Digite a senha de acesso profissional:");
             if (pass !== "annie123") {
