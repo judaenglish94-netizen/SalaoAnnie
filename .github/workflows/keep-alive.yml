@@ -1,0 +1,16 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar requisição para manter o Supabase ativo
+        run: |
+          curl -X GET "https://fifkfhqjvzqywgewsuiy.supabase.co/rest/v1/agendamentos?select=id&limit=1" \
+          -H "apikey: sb_publishable_rjCDpJ4Ft4u196tKwsOo4Q_Q7iXi6En" \
+          -H "Authorization: Bearer sb_publishable_rjCDpJ4Ft4u196tKwsOo4Q_Q7iXi6En"
