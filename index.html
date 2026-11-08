@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Annie | Hair Stylist - Agendamento</title>
+    <!-- Configurações para PWA (App) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff75a0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Annie Hair">
+    <link rel="apple-touch-icon" href="annielogo.png">
+
     <!-- Fontes do Google -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Biblioteca Supabase JS -->
@@ -62,7 +70,7 @@
             align-items: center;
         }
 
-        /* Ajuste fino: Zoom de 340% para ocultar a borda antiga e posicionamento central exato do "Am" */
+        /* Logo centralizada com zoom ajustado */
         .logo-container {
             width: 130px;
             height: 130px;
@@ -145,6 +153,14 @@
             margin-top: 15px;
             box-shadow: 0 0 12px rgba(255, 117, 160, 0.3);
             font-size: 0.9rem;
+        }
+
+        .btn-install {
+            background: rgba(45, 20, 32, 0.9);
+            border: 1px dashed var(--rose-primary);
+            color: var(--rose-light);
+            margin-top: 12px;
+            font-size: 0.85srem;
         }
 
         .screen {
@@ -318,7 +334,6 @@
 <body>
 
     <div class="container">
-        <!-- Logo perfeitamente centralizada e com zoom ajustado -->
         <div class="logo-container"></div>
 
         <div class="brand-header">
@@ -329,6 +344,7 @@
         <!-- TELA 1: HOME -->
         <div id="home-screen" class="screen active">
             <button class="btn-luxury" onclick="goToScreen('booking-screen')">Agendar Atendimento</button>
+            <button class="btn-luxury btn-install" onclick="showInstallInstructions()">📲 Como instalar como App</button>
             <div class="admin-footer" onclick="openAdminPanel()">⚙️ Acesso Profissional</div>
         </div>
 
@@ -384,6 +400,16 @@
             document.getElementById(screenId).classList.add('active');
             if(screenId === 'booking-screen') {
                 loadAvailableSpots();
+            }
+        }
+
+        function showInstallInstructions() {
+            let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            
+            if (isIOS) {
+                alert("🍎 Para instalar no seu iPhone (iOS):\n\n1. Toque no ícone de Compartilhar (o quadrado com a seta para cima ⎋) na barra inferior do Safari.\n2. Role as opções para baixo e toque em 'Adicionar à Tela de Início'.\n3. Toque em 'Adicionar' no canto superior direito. Pronto!");
+            } else {
+                alert("🤖 Para instalar no seu Android:\n\n1. Toque no menu do navegador (os três pontinhos no canto superior direito).\n2. Selecione 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n3. Confirme e o app da Annie estará no seu celular!");
             }
         }
 
@@ -531,7 +557,7 @@
                     let agendamentoParaApagar = data[indexNum];
                     let confirma = confirm(`Deseja realmente liberar o horário de ${agendamentoParaApagar.cliente_nome} (${agendamentoParaApagar.data_agendamento} às ${agendamentoParaApagar.horario})?`);
                     if (confirma) {
-                        await supabaseClient.from('agendamentos').delete().eq('id', agendamentoParaApagar.id);
+                        await supabaseClient.from('agendamentos').delete().eq('id', agendamentoParaApager.id);
                         alert("Horário liberado com sucesso! Ele já está disponível novamente no site.");
                     }
                 } else {
