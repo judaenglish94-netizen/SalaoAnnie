@@ -363,6 +363,30 @@
             box-shadow: 0 0 10px rgba(255, 117, 160, 0.4);
         }
 
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-wrapper .form-input {
+            padding-right: 48px;
+        }
+
+        .toggle-password-btn {
+            position: absolute;
+            right: 12px;
+            background: transparent;
+            border: none;
+            color: var(--rose-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 6px;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+
         .selected-info {
             background: rgba(32, 21, 28, 0.9);
             border: 1px dashed var(--rose-primary);
@@ -493,6 +517,27 @@
                 * Ao confirmar, você será direcionado para o WhatsApp para concluir o atendimento.<br>
                 <strong>Precisa cancelar ou remarcar?</strong> Informe diretamente no WhatsApp da Annie.
             </div>
+        </div>
+
+        <!-- TELA 4: LOGIN ADMIN -->
+        <div id="admin-login-screen" class="screen">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--rose-light); margin-bottom: 12px; text-align: center;">Acesso Profissional</h3>
+
+            <div class="form-group">
+                <label for="admin-email">E-mail de Administrador</label>
+                <input type="email" id="admin-email" class="form-input" placeholder="Ex: annie@salao.com">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="admin-password">Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="admin-password" class="form-input" placeholder="Digite sua senha">
+                    <button type="button" id="toggle-pass-btn" class="toggle-password-btn" aria-label="Segurar para ver senha">👁️</button>
+                </div>
+            </div>
+
+            <button class="btn-luxury" onclick="submitAdminLogin()">Entrar</button>
+            <button class="btn-luxury" onclick="goToScreen('home-screen')">Voltar</button>
         </div>
     </div>
 
@@ -648,28 +693,63 @@
             window.location.href = whatsappUrl;
         }
 
+        // Controle do botão de olho (revela enquanto segura, esconde ao soltar)
+        const togglePassBtn = document.getElementById('toggle-pass-btn');
+        const adminPassInput = document.getElementById('admin-password');
+
+        function showPass(e) {
+            if (e) e.preventDefault();
+            adminPassInput.type = 'text';
+        }
+
+        function hidePass() {
+            adminPassInput.type = 'password';
+        }
+
+        togglePassBtn.addEventListener('mousedown', showPass);
+        togglePassBtn.addEventListener('mouseup', hidePass);
+        togglePassBtn.addEventListener('mouseleave', hidePass);
+        togglePassBtn.addEventListener('touchstart', showPass, { passive: false });
+        togglePassBtn.addEventListener('touchend', hidePass);
+        togglePassBtn.addEventListener('touchcancel', hidePass);
+
         // Autenticação real via Supabase Auth (sem senha exposta no código)
         async function openAdminPanel() {
             const { data: { session } } = await supabaseClient.auth.getSession();
 
             if (!session) {
-                const email = prompt("🔐 ACESSO PROFISSIONAL\n\nDigite o e-mail de administrador:");
-                if (!email) return;
-
-                const password = prompt("🔐 ACESSO PROFISSIONAL\n\nDigite sua senha:");
-                if (!password) return;
-
-                const { error: authError } = await supabaseClient.auth.signInWithPassword({
-                    email: email.trim(),
-                    password: password
-                });
-
-                if (authError) {
-                    alert("E-mail ou senha incorretos.");
-                    return;
-                }
+                goToScreen('admin-login-screen');
+                return;
             }
 
+            await loadAdminAppointments();
+        }
+
+        async function submitAdminLogin() {
+            const email = document.getElementById('admin-email').value.trim();
+            const password = document.getElementById('admin-password').value;
+
+            if (!email || !password) {
+                alert("Preencha o e-mail e a senha.");
+                return;
+            }
+
+            const { error: authError } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (authError) {
+                alert("E-mail ou senha incorretos.");
+                return;
+            }
+
+            document.getElementById('admin-password').value = "";
+            goToScreen('home-screen');
+            await loadAdminAppointments();
+        }
+
+        async function loadAdminAppointments() {
             const { data, error } = await supabaseClient
                 .from('agendamentos')
                 .select('*')
