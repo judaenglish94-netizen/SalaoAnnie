@@ -452,11 +452,27 @@
             <button class="btn-luxury" onclick="goToScreen('booking-screen')">Agendar Atendimento</button>
             
             <div class="app-links-box">
-                <button class="btn-app-store" onclick="installAndroid()">🤖 App Android</button>
+                <button class="btn-app-store" onclick="goToScreen('android-screen')">🤖 App Android</button>
                 <button class="btn-app-store" onclick="goToScreen('ios-screen')">🍎 App iOS</button>
             </div>
 
             <div class="admin-footer" onclick="openAdminPanel()">⚙️ Acesso Profissional</div>
+        </div>
+
+        <!-- TELA DE INSTRUÇÕES ANDROID -->
+        <div id="android-screen" class="screen">
+            <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--rose-light); margin-bottom: 12px; text-align: center;">Instalar no Android</h3>
+            
+            <div class="ios-guide-box">
+                <p>Para ter o atalho do salão direto na tela inicial do seu celular como um aplicativo, siga estes 3 passos simples:</p>
+                <ol>
+                    <li>Abra este site no navegador <strong>Google Chrome</strong>.</li>
+                    <li>Toque nos <strong>três pontinhos (⋮)</strong> no canto superior direito.</li>
+                    <li>Selecione <strong>"Adicionar à tela inicial"</strong> ou <strong>"Instalar aplicativo"</strong>. Pronto!</li>
+                </ol>
+            </div>
+
+            <button class="btn-luxury" onclick="goToScreen('home-screen')">Página Inicial</button>
         </div>
 
         <!-- TELA DE INSTRUÇÕES iOS -->
@@ -561,10 +577,6 @@
         function toggleMainAccordion() {
             const acc = document.getElementById('main-regular-accordion');
             acc.classList.toggle('active');
-        }
-
-        function installAndroid() {
-            alert("🤖 Para instalar no Android:\n\nToque nos três pontinhos no canto superior direito do seu navegador e selecione 'Instalar aplicativo' ou 'Adicionar à tela inicial'.");
         }
 
         function generateScheduleDays() {
