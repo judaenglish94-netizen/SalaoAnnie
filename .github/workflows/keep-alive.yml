@@ -11,6 +11,6 @@ jobs:
     steps:
       - name: Enviar requisição para manter o Supabase ativo
         run: |
-          curl -X GET "https://fifkfhqjvzqywgewsuiy.supabase.co/rest/v1/agendamentos?select=id&limit=1" \
-          -H "apikey: sb_publishable_rjCDpJ4Ft4u196tKwsOo4Q_Q7iXi6En" \
-          -H "Authorization: Bearer sb_publishable_rjCDpJ4Ft4u196tKwsOo4Q_Q7iXi6En"
+          curl -f -s -S -X GET "https://fifkfhqjvzqywgewsuiy.supabase.co/rest/v1/agendamentos?select=id&limit=1" \
+          -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZmtmaHFqdnpxeXdnZXdzdWl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxMjI3MDUsImV4cCI6MjEwOTY5ODcwNX0.BfRd7qERMK4wMM9-pYZgdJlNUKjmTYJuyxww85BbY34" \
+          -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZpZmtmaHFqdnpxeXdnZXdzdWl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQxMjI3MDUsImV4cCI6MjEwOTY5ODcwNX0.BfRd7qERMK4wMM9-pYZgdJlNUKjmTYJuyxww85BbY34"
